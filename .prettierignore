@@ -1,0 +1,8 @@
+# Build directory
+dist/
+
+# Configuration and npm settings
+*.json
+
+# Definition files
+*.d.ts

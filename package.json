@@ -1,0 +1,90 @@
+{
+  "name": "@nativescript/eslint-plugin",
+  "version": "0.0.0",
+  "description": "A set of ESLint rules for NativeScript projects.",
+  "main": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
+  "keywords": [
+    "NativeScript",
+    "eslint-plugin",
+    "eslint"
+  ],
+  "author": {
+    "name": "NativeScript Team"
+  },
+  "contributors": [
+    "Stanimira Vlaeva <stanimira.vlaeva@gmail.com>"
+  ],
+  "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "lint": "npm run lint:src && npm run lint:test",
+    "lint:src": "eslint src/ --ext .ts",
+    "lint:test": "eslint test/ --ext .ts",
+    "lint:src:fix": "eslint src/ --ext .ts --fix",
+    "lint:test:fix": "eslint test/ --ext .ts --fix",
+    "lint:fix": "npm run lint:src:fix && npm run lint:test:fix",
+    "test": "jest",
+    "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --coverage false",
+    "prettier": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
+    "prepublishOnly": "npm run build && npm run lint && npm run test",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
+  },
+  "dependencies": {
+    "@typescript-eslint/experimental-utils": "^4.17.0"
+  },
+  "devDependencies": {
+    "@types/eslint": "^7.2.7",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.34",
+    "@typescript-eslint/eslint-plugin": "^4.17.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^4.17.0",
+    "@typescript-eslint/parser": "^4.17.0",
+    "@typescript-eslint/typescript-estree": "^4.17.0",
+    "conventional-changelog-cli": "^2.1.1",
+    "eslint": "^7.22.0",
+    "husky": "^5.1.3",
+    "jest": "^26.6.3",
+    "lint-staged": "^10.5.4",
+    "prettier": "^2.2.1",
+    "ts-jest": "^26.5.3",
+    "typescript": "^4.2.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "moduleFileExtensions": [
+      "js",
+      "ts"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "<rootDir>/src/**"
+    ],
+    "coverageDirectory": "<rootDir>/reports/coverage",
+    "transform": {
+      "\\.(ts)$": "ts-jest"
+    },
+    "testRegex": "/test/.*\\.spec\\.ts$",
+    "preset": "ts-jest",
+    "testMatch": null
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npm run lint:fix",
+      "git add"
+    ],
+    "*.{json,md,ts}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
