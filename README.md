@@ -23,6 +23,7 @@ npm i -D @nativescript/eslint-plugin @typescript-eslint/parser eslint
   },
   "plugins": ["@nativescript"],
   "rules": {
+        "@nativescript/no-nativescript-angular-imports": "warn",
         "@nativescript/no-tns-core-modules-imports": "warn",
         "@nativescript/no-duplicate-ns-imports": "warn"
   }
