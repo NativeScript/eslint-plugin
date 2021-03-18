@@ -5,13 +5,18 @@ export type Options = [];
 
 export type MessageIds = "import";
 
+const NATIVESCRIPT_MODULES = [
+    "@nativescript/core",
+    "@nativescript/angular"
+];
+
 export default createESLintRule<Options, MessageIds>({
-    name: "no-tns-core-modules-imports",
+    name: "no-duplicate-ns-imports",
     meta: {
         type: "suggestion",
         docs: {
             category: "Best Practices",
-            description: "Disallow use of tns-core-modules imports",
+            description: "Disallow duplicated imports from NativeScript packages",
             recommended: "warn",
         },
         messages: {
@@ -22,50 +27,56 @@ export default createESLintRule<Options, MessageIds>({
     },
     defaultOptions: [],
     create(context) {
-        const nsCoreImports: Array<TSESTree.ImportDeclaration> = [];
+        const nsImports: Map<string, Array<TSESTree.ImportDeclaration>> = new Map();
 
         return {
             ImportDeclaration: (node: TSESTree.ImportDeclaration) => {
                 const { source } = node;
-                if (source.value === "@nativescript/core") {
-                    nsCoreImports.push(node);
+                const { value, raw } = source;
+
+                if (typeof value === "string" && NATIVESCRIPT_MODULES.includes(value)) {
+                    const imports = nsImports.get(raw) || [];
+                    imports.push(node);
+                    nsImports.set(raw, imports);
                 }
             },
             "Program:exit"() {
-                if (nsCoreImports.length < 2) {
-                    return;
+                for (const [path, imports] of nsImports) {
+                    if (imports.length < 2) {
+                        return;
+                    }
+
+                    const specifiers = imports.reduce(
+                        (all, importNode) => [...all, ...importNode.specifiers],
+                        []
+                    );
+
+                    const specifierValuesText = getSpecifierValues(specifiers);
+                    if (!specifierValuesText) {
+                        return null;
+                    }
+
+                    const [firstImportNode] = imports;
+
+                    context.report({
+                        node: firstImportNode,
+                        messageId: "import",
+                        data: {
+                            module: firstImportNode.source.value,
+                        },
+                        fix: (fixer) => {
+                            const fixedImport = `import ${specifierValuesText} from ${path};`;
+                            const replaceFirstFix = fixer.replaceText(firstImportNode, fixedImport);
+                            const sourceCode = context.getSourceCode().getText();
+                            const removeNodesFixes = imports
+                                .slice(1)
+                                .map((node) => getRemoveNodeRange(node, sourceCode))
+                                .map((nodeRange) => fixer.removeRange(nodeRange));
+
+                            return [replaceFirstFix, ...removeNodesFixes];
+                        },
+                    });
                 }
-
-                const specifiers = nsCoreImports.reduce(
-                    (all, importNode) => [...all, ...importNode.specifiers],
-                    [],
-                );
-
-                const specifierValuesText = getSpecifierValues(specifiers);
-                if (!specifierValuesText) {
-                    return null;
-                }
-
-                const [firstImportNode] = nsCoreImports;
-
-                context.report({
-                    node: firstImportNode,
-                    messageId: "import",
-                    data: {
-                        module: firstImportNode.source.value,
-                    },
-                    fix: (fixer) => {
-                        const fixedImport = `import ${specifierValuesText} from '@nativescript/core';`;
-                        const replaceFirstFix = fixer.replaceText(firstImportNode, fixedImport);
-                        const source = context.getSourceCode().getText();
-                        const removeNodesFixes = nsCoreImports
-                            .slice(1)
-                            .map((node) => getRemoveNodeRange(node, source))
-                            .map((nodeRange) => fixer.removeRange(nodeRange));
-
-                        return [replaceFirstFix, ...removeNodesFixes];
-                    },
-                });
             },
         };
     },

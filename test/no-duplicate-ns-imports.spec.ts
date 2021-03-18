@@ -25,6 +25,25 @@ import { Application, Trace } from '@nativescript/core';
 
         getInvalidTest({
             code: `
+import { NativeScriptModule } from "@nativescript/angular";
+import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
+import { NativeScriptRouterModule } from "@nativescript/angular";
+import { NativeScriptFormsModule } from "@nativescript/angular";
+import { routes } from "./app.routes";
+import { AppComponent } from "./app.component";
+import { ModalDialogService } from "@nativescript/angular";
+`,
+            output: `
+import { NativeScriptModule, NativeScriptRouterModule, NativeScriptFormsModule, ModalDialogService } from "@nativescript/angular";
+import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
+import { routes } from "./app.routes";
+import { AppComponent } from "./app.component";
+`,
+            locations: [{ line: 2, column: 1 }],
+        }),
+
+        getInvalidTest({
+            code: `
 import { android as androidApp } from '@nativescript/core';
 import { Trace } from '@nativescript/core';
 `,
