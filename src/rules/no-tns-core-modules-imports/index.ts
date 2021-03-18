@@ -1,6 +1,6 @@
-import { ESLintUtils, TSESTree } from "@typescript-eslint/experimental-utils";
+import { TSESTree } from "@typescript-eslint/experimental-utils";
 import { RuleContext, RuleFix } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
-import { getRemoveNodeRange } from "../utils";
+import { createESLintRule, getRemoveNodeRange } from "../utils";
 import {
     DEPRECATED_PATH_MAP,
     DEPRECATED_PATHS,
@@ -25,8 +25,6 @@ interface ImportNodeFixerInfo {
     additionalImportsFixes: Set<string>;
     fixedImportPath?: string;
 }
-
-export const createESLintRule = ESLintUtils.RuleCreator(() => ``);
 
 export type Options = [];
 

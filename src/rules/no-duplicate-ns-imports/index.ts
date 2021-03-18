@@ -1,6 +1,5 @@
-import { ESLintUtils, TSESTree } from "@typescript-eslint/experimental-utils";
-import { getRemoveNodeRange } from "../utils";
-export const createESLintRule = ESLintUtils.RuleCreator(() => ``);
+import { TSESTree } from "@typescript-eslint/experimental-utils";
+import { createESLintRule, getRemoveNodeRange } from "../utils";
 
 export type Options = [];
 

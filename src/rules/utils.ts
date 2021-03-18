@@ -1,4 +1,6 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
+import { ESLintUtils, TSESTree } from "@typescript-eslint/experimental-utils";
+
+export const createESLintRule = ESLintUtils.RuleCreator(() => ``);
 
 export function getRemoveNodeRange(node: TSESTree.Node, source: string): TSESTree.Range {
     const lineBreakPattern = /\r\n|[\r\n\u2028\u2029]/u;
