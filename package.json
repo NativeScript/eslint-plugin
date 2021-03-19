@@ -33,7 +33,8 @@
     "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --coverage false",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
     "prepublishOnly": "npm run build && npm run lint && npm run test",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@typescript-eslint/experimental-utils": "^4.17.0"
@@ -72,11 +73,6 @@
     "testRegex": "/test/.*\\.spec\\.ts$",
     "preset": "ts-jest",
     "testMatch": null
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "*.ts": [
