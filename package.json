@@ -1,6 +1,6 @@
 {
   "name": "@nativescript/eslint-plugin",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A set of ESLint rules for NativeScript projects.",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -13,7 +13,8 @@
     "name": "NativeScript Team"
   },
   "contributors": [
-    "Stanimira Vlaeva <stanimira.vlaeva@gmail.com>"
+    "Stanimira Vlaeva <stanimira.vlaeva@gmail.com>",
+    "NativeScript TSC <oss@nativescript.org>"
   ],
   "license": "Apache-2.0",
   "files": [

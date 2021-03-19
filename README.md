@@ -1,10 +1,10 @@
 # NativeScript ESLint Plugin
 
-This package contains ESLint rules useful for NativeScript projects.
+ESLint rules for NativeScript projects.
 
 ## Installation and setup
 
-1. Install the necessary dependencies.
+1. Install
 
 ```
 npm i -D @nativescript/eslint-plugin @typescript-eslint/parser eslint
@@ -36,7 +36,7 @@ npm i -D @nativescript/eslint-plugin @typescript-eslint/parser eslint
 npx eslint --ext=ts src/
 ```
 
-**Notice that you need to provide the path to your source code. In the example above, that's `src/`. Change it to match your project setup.**
+**Notice that you need to provide the path to your source code. In the example above, we use `src/`. Change that to match your project setup.**
 
 4. Fix all auto-fixable problems.
 
