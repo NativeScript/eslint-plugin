@@ -22,11 +22,9 @@ npm i -D @nativescript/eslint-plugin @typescript-eslint/parser eslint
     "ecmaVersion": 2015
   },
   "plugins": ["@nativescript"],
-  "rules": {
-        "@nativescript/no-nativescript-angular-imports": "warn",
-        "@nativescript/no-tns-core-modules-imports": "warn",
-        "@nativescript/no-duplicate-ns-imports": "warn"
-  }
+  "extends": [
+    "plugin:@nativescript/recommended"
+  ]
 }
 ```
 
@@ -50,5 +48,5 @@ npx eslint --ext=ts --fix src/
 -   Add the following to your `settings.json` file:
 
 ```json
-"eslint.validate": [ "typescript", "javascript"],
+"eslint.validate": [ "typescript", "javascript" ],
 ```
