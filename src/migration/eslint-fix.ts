@@ -1,5 +1,5 @@
 import { Linter } from "eslint";
-import { recommendedRules as rules } from "../rules";
+import { rules } from "../rules";
 import { parseForESLint } from "@typescript-eslint/parser";
 
 const PARSER = "@typescript-eslint/parser";
@@ -15,12 +15,12 @@ export function verifyAndFixFileContent(fileContent: string, fileName: string): 
         linter.defineRule(rule, rules[rule]);
     }
     const definedRules = Object.keys(rules).reduce((obj, rule) => {
-        obj[rule] = 'error';
+        obj[rule] = "error";
         return obj;
     }, {});
 
     linter.defineParser(PARSER, {
-        parseForESLint: parseForESLint as any
+        parseForESLint: parseForESLint as any,
     });
 
     const report = linter.verifyAndFix(fileContent, {
