@@ -1,6 +1,8 @@
 #!/usr/bin/env node
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-undef */
 
-import { fixFilesInDirectory } from '../src/migration';
+const { fixFilesInDirectory } = require('../dist/src/migration');
 
 (async () => {
     const directory = process.argv[2];

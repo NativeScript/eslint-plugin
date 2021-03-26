@@ -1,6 +1,6 @@
 {
   "name": "@nativescript/eslint-plugin",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "A set of ESLint rules for NativeScript projects.",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -13,11 +13,12 @@
     "name": "NativeScript Team"
   },
   "contributors": [
-    "Stanimira Vlaeva <stanimira.vlaeva@gmail.com>"
+    "Stanimira Vlaeva <stanimira.vlaeva@gmail.com>",
+    "NativeScript TSC <oss@nativescript.org>"
   ],
   "license": "Apache-2.0",
   "bin": {
-    "@nativescript/eslint-plugin": "./dist/bin/migrate.js"
+    "@nativescript/eslint-plugin": "./bin/migrate.js"
   },
   "files": [
     "dist"
@@ -25,19 +26,18 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "lint": "npm run lint:bin && npm run lint:src && npm run lint:test",
-    "lint:bin": "eslint bin/ --ext .ts",
+    "lint": "npm run lint:src && npm run lint:test",
     "lint:src": "eslint src/ --ext .ts",
     "lint:test": "eslint test/ --ext .ts",
-    "lint:bin:fix": "eslint bin/ --ext .ts --fix",
     "lint:src:fix": "eslint src/ --ext .ts --fix",
     "lint:test:fix": "eslint test/ --ext .ts --fix",
-    "lint:fix": "npm run lint:bin:fix && npm run lint:src:fix && npm run lint:test:fix",
+    "lint:fix": "npm run lint:src:fix && npm run lint:test:fix",
     "test": "jest",
     "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --coverage false",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
     "prepublishOnly": "npm run build && npm run lint && npm run test",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@typescript-eslint/experimental-utils": "^4.17.0"
@@ -76,11 +76,6 @@
     "testRegex": "/test/.*\\.spec\\.ts$",
     "preset": "ts-jest",
     "testMatch": null
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "*.ts": [
