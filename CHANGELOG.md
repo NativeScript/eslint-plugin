@@ -1,3 +1,7 @@
+## [0.0.3-next.2](https://github.com/NativeScript/eslint/compare/v0.0.3-next.0...v0.0.3-next.2) (2021-04-01)
+
+## [0.0.3-next.1](https://github.com/NativeScript/eslint/compare/v0.0.3-next.0...v0.0.3-next.1) (2021-04-01)
+
 ## [0.0.3-next.1](https://github.com/NativeScript/eslint/compare/v0.0.3-next.0...v0.0.3-next.1) (2021-03-26)
 
 ## 0.0.3-next.0 (2021-03-26)
