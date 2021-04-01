@@ -76,6 +76,23 @@ import defaultExport, * as core from '@nativescript/core';
             locations: [{ line: 2, column: 1 }],
         }),
 
+        /**
+         * Remove duplicate specifiers
+         */
+        getInvalidTest({
+            code: `
+import { EventData, Page } from '@nativescript/core'
+import { HelloWorldModel } from './main-view-model'
+import { Trace } from '@nativescript/core';
+import { Application } from '@nativescript/core';
+import { Application, Page } from '@nativescript/core';
+`,
+            output: `
+import { EventData, Page, Trace, Application } from '@nativescript/core';
+import { HelloWorldModel } from './main-view-model'
+`,
+            locations: [{ line: 2, column: 1 }],
+        }),
     ],
     valid: [
         `import { something } from 'tns-core-modules';`,
@@ -87,6 +104,5 @@ import defaultExport, * as core from '@nativescript/core';
 import * as nsCore from '@nativescript/core';
 import { Trace } from '@nativescript/core';
         `,
-
     ],
 });

@@ -5,10 +5,7 @@ export type Options = [];
 
 export type MessageIds = "import";
 
-const NATIVESCRIPT_MODULES = [
-    "@nativescript/core",
-    "@nativescript/angular"
-];
+const NATIVESCRIPT_MODULES = ["@nativescript/core", "@nativescript/angular"];
 
 export default createESLintRule<Options, MessageIds>({
     name: "no-duplicate-ns-imports",
@@ -46,10 +43,7 @@ export default createESLintRule<Options, MessageIds>({
                         return;
                     }
 
-                    const specifiers = imports.reduce(
-                        (all, importNode) => [...all, ...importNode.specifiers],
-                        []
-                    );
+                    const specifiers = imports.reduce((all, importNode) => [...all, ...importNode.specifiers], []);
 
                     const specifierValuesText = getSpecifierValues(specifiers);
                     if (!specifierValuesText) {
@@ -83,7 +77,7 @@ export default createESLintRule<Options, MessageIds>({
 });
 
 function getSpecifierValues(specifiers: Array<TSESTree.ImportClause>) {
-    const importSpecifiers: Array<string> = [];
+    const importSpecifiers: Set<string> = new Set();
     let defaultExport: string | undefined;
     let namespaceSpecifier: string | undefined;
 
@@ -94,14 +88,14 @@ function getSpecifierValues(specifiers: Array<TSESTree.ImportClause>) {
             namespaceSpecifier = `* as ${specifier.local.name}`;
         } else {
             const { imported, local } = specifier;
-            importSpecifiers.push(imported.name === local.name ? imported.name : `${imported.name} as ${local.name}`);
+            importSpecifiers.add(imported.name === local.name ? imported.name : `${imported.name} as ${local.name}`);
         }
     });
 
-    if (importSpecifiers.length && namespaceSpecifier) {
+    if (importSpecifiers.size && namespaceSpecifier) {
         return;
-    } else if (importSpecifiers.length) {
-        const specifiersText = `{ ${importSpecifiers.join(", ")} }`;
+    } else if (importSpecifiers.size) {
+        const specifiersText = `{ ${Array.from(importSpecifiers).join(", ")} }`;
 
         return defaultExport ? `${defaultExport}, ${specifiersText}` : specifiersText;
     } else if (namespaceSpecifier) {
